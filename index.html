@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pipe Bloom · Flutter Pipe Puzzle Game · Live demo</title>
+  <meta name="description" content="Play Pipe Bloom in your browser: a relaxing Flutter pipe puzzle game with 1000 levels. Turn the pipes, lead the water and make every flower bloom.">
+  <link rel="icon" type="image/png" href="app/favicon.png">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #e6f7f1;
+      --bg-2: #c9ebd9;
+      --text: #22443a;
+      --muted: #5e8274;
+      --accent: #e9568a;
+      --frame: #1c2b26;
+      --frame-edge: #3d544b;
+      --app: #e6f7f1;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background:
+        radial-gradient(circle at 85% 8%, #fff1c7, transparent 40%),
+        radial-gradient(circle at 8% 55%, #bfe6f5, transparent 40%),
+        radial-gradient(circle at 80% 100%, #fbd9e5, transparent 45%),
+        linear-gradient(var(--bg), var(--bg-2));
+      color: var(--text);
+      font-family: -apple-system, system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* Phone is laid out at real iPhone size, then scaled to fit the window. */
+    .stage { width: 417px; height: 876px; flex: none; transform-origin: center; }
+    .phone {
+      position: relative;
+      width: 417px;
+      height: 876px;
+      padding: 12px;
+      border-radius: 64px;
+      background: var(--frame);
+      box-shadow: 0 0 0 2px var(--frame-edge), 0 40px 90px rgba(34, 68, 58, 0.35);
+    }
+    .phone::before, .phone::after { content: ""; position: absolute; width: 4px; background: var(--frame-edge); border-radius: 2px; }
+    .phone::before { left: -5px; top: 170px; height: 100px; }
+    .phone::after { right: -5px; top: 220px; height: 120px; }
+    .screen { position: relative; width: 393px; height: 852px; border-radius: 52px; overflow: hidden; background: var(--app); }
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    .island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 124px; height: 36px; border-radius: 20px; background: #000; pointer-events: none; z-index: 3; }
+    .caption { flex: none; margin-top: 18px; font-size: 13px; color: var(--muted); text-align: center; }
+    .caption a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .caption a:hover { text-decoration: underline; }
+    .sep { margin: 0 8px; opacity: 0.5; }
+    /* On a real phone, skip the frame and run the game full screen. */
+    @media (max-width: 500px) {
+      body { display: block; }
+      .stage, .phone, .screen { width: 100%; height: 100%; transform: none !important; }
+      .phone { padding: 0; border-radius: 0; box-shadow: none; background: var(--app); }
+      .phone::before, .phone::after, .island, .caption { display: none; }
+      .screen { border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="phone">
+      <div class="screen">
+        <iframe id="app" title="Pipe Bloom game"></iframe>
+        <div class="island"></div>
+      </div>
+    </div>
+  </div>
+  <p class="caption">
+    Built with Flutter<span class="sep">·</span>Tap a pipe to turn it<span class="sep">·</span>
+    <a href="https://yaqoobdeveloper.com/ui-kits/pipe-bloom-flutter-pipe-puzzle-game" target="_blank" rel="noopener">Get the source code →</a>
+  </p>
+  <script>
+    const framed = window.innerWidth > 500;
+    // In the phone frame the game gets iPhone-like safe areas and a status bar.
+    document.getElementById('app').src = framed ? 'app/?frame=1' : 'app/';
+    const stage = document.getElementById('stage');
+    function fit() {
+      if (window.innerWidth <= 500) { stage.style.transform = ''; stage.style.margin = ''; return; }
+      const scale = Math.min(1, (window.innerHeight - 70) / 876, (window.innerWidth - 32) / 417);
+      stage.style.transform = `scale(${scale})`;
+      const gap = (876 * (1 - scale)) / 2;
+      stage.style.margin = `${-gap}px 0`;
+    }
+    fit();
+    window.addEventListener('resize', fit);
+  </script>
+</body>
+</html>

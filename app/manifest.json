@@ -1,0 +1,35 @@
+{
+    "name": "Pipe Bloom",
+    "short_name": "Pipe Bloom",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#E6F7F1",
+    "theme_color": "#35A955",
+    "description": "Turn the pipes and water every flower.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
